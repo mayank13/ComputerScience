@@ -14,6 +14,13 @@ function Graph() {
 	}
 }
 
+Graph.prototype.initNodeVisited = function(){
+	//Initialise the nodeVisted Array
+	for (var i = 0; i < this.nodes.length; i++) {
+		this.nodeVisited[i] = false;
+	}	
+}
+
 Graph.prototype.addEdge = function(v, w) {
 	if (this.nodes[v] === undefined) {
 		this.nodes[v] = [];
@@ -44,18 +51,22 @@ Graph.prototype.adjNodes = function(Graph, vertex) {
 
 Graph.prototype.DFS = function(s) {
 
-
-	if (this.nodeVisited[s]) return;
+	//if (this.nodeVisited[s]) return;
+	if(!this.nodeVisited[s]){
+		this.nodeVisited[s] = true;
+		console.log(s);
+	}
+	
 	//Can be refactored by removing this 
 	var adjacentNodesForS = this.adjNodes(this, s);
 	for (var i = 0; i < adjacentNodesForS.length; i++) {
-		this.nodeVisited[adjacentNodesForS[i]] = true;
-		console.log(adjacentNodesForS[i]);
-		this.DFS(adjacentNodesForS[i]);
+		//this.nodeVisited[adjacentNodesForS[i]] = true;
+		if (!this.nodeVisited[adjacentNodesForS[i]]) {
+			//console.log(adjacentNodesForS[i]);
+			this.DFS(adjacentNodesForS[i]);
+		}
+
 	}
-
-
-
 };
 
 
@@ -68,6 +79,8 @@ function createGraph() {
 	g.addEdge(2, 3);
 	g.addEdge(1, 3);
 	g.addEdge(3, 4);
+
+	g.initNodeVisited();
 
 	console.log("Adjacent Node for 0");
 	Graph.prototype.adjNodes(g, 0);
