@@ -2,6 +2,10 @@
 /* What should the API have: adjNodes, isConnected(u,v)*/
 
 // passing the array to generate the graph
+
+var Queue = require('../LinkedList/Queue.js');
+
+var q = new Queue();
 var str = "";
 
 function Graph() {
@@ -14,11 +18,11 @@ function Graph() {
 	}
 }
 
-Graph.prototype.initNodeVisited = function(){
+Graph.prototype.initNodeVisited = function() {
 	//Initialise the nodeVisted Array
 	for (var i = 0; i < this.nodes.length; i++) {
 		this.nodeVisited[i] = false;
-	}	
+	}
 }
 
 Graph.prototype.addEdge = function(v, w) {
@@ -41,7 +45,7 @@ Graph.prototype.adjNodes = function(Graph, vertex) {
 		return;
 	}
 	for (var i = 0; i < Graph.nodes[vertex].length; i++) {
-		console.log(Graph.nodes[vertex][i]);
+		//console.log(Graph.nodes[vertex][i]);
 		str += Graph.nodes[vertex][i] + " ";
 	}
 
@@ -52,11 +56,11 @@ Graph.prototype.adjNodes = function(Graph, vertex) {
 Graph.prototype.DFS = function(s) {
 
 	//if (this.nodeVisited[s]) return;
-	if(!this.nodeVisited[s]){
+	if (!this.nodeVisited[s]) {
 		this.nodeVisited[s] = true;
 		console.log(s);
 	}
-	
+
 	//Can be refactored by removing this 
 	var adjacentNodesForS = this.adjNodes(this, s);
 	for (var i = 0; i < adjacentNodesForS.length; i++) {
@@ -68,6 +72,25 @@ Graph.prototype.DFS = function(s) {
 
 	}
 };
+
+Graph.prototype.BFS = function(s) {
+	q.enqueue(s);
+	var adjacentNodesForS = [];
+	while (!q.isEmpty()) {
+		var dqElement = q.dequeue();
+
+		if (this.nodeVisited[dqElement] !== true) {
+			adjacentNodesForS = this.adjNodes(this, dqElement);
+			this.nodeVisited[dqElement] = true;
+			console.log(dqElement);
+			//Is this loop required?
+			for (var i = 0; i < adjacentNodesForS.length; i++) {
+				q.enqueue(adjacentNodesForS[i]);
+			}
+		}
+
+	}
+}
 
 
 
@@ -95,6 +118,10 @@ function createGraph() {
 	console.log("-------DFS-----");
 	g.DFS(0);
 	//console.log(str);
+
+	console.log("--BFS--");
+	g.initNodeVisited();
+	g.BFS(0);
 
 }
 
