@@ -22,13 +22,29 @@ Queue.prototype.dequeue = function() {
 		console.log("Queue is empty");
 	var element = this.elements[this.front];
 	this.front++;
+	if (this.front > this.back) {
+		this.front = -1;
+		this.back = -1;
+	}
+
 	return element;
 }
 
 Queue.prototype.printQueue = function() {
+	if (this.front === -1 && this.back === -1) {
+		console.log("Queue is Empty");
+		return;
+	}
 	for (var i = this.front; i <= this.back; i++) {
 		console.log(this.elements[i]);
 	}
+}
+
+Queue.prototype.isEmpty = function() {
+	/*	if(this.front === -1 &&  this.back === -1)
+			return true;
+		return false;*/
+	return this.front === -1 && this.back === -1 ? true : false;
 }
 
 function testQueue() {
@@ -44,9 +60,20 @@ function testQueue() {
 
 	q.dequeue();
 	q.dequeue();
+	q.printQueue();
+
+	q.dequeue();
+	q.dequeue();
+	q.dequeue();
+
 
 	q.printQueue();
+	console.log("Is empty q-- > " + q.isEmpty());
+	console.log("--end of test");
+
 
 }
 
 testQueue();
+
+module.exports = Queue;
