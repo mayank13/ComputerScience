@@ -1,11 +1,13 @@
+var count = 0 ; 
 var readArray = [];
 var fs = require('fs');
-fs.readFile('./data.txt', 'utf-8', (err, data) => {
+fs.readFile('./data.json', 'utf-8', (err, data) => {
 	if (err) throw err;
 	console.log(data);
 	readArray = data.split("\r\n").map(Number);
 	console.log(readArray);
 	console.log(mergeSort(readArray));
+	console.log(count);
 });
 
 
@@ -34,6 +36,8 @@ function merge(left, right) {
 			results.push(right[j]);
 			j++;
 			k++;
+			count += left.length - i ;
+
 		}
 	}
 
