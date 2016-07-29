@@ -8,7 +8,7 @@ fs.readFile('./data.json', 'utf-8', function(err, data) {
 function mergerSort(arr) {
 	var aux = [];
 	sort(arr, aux, 0, arr.length - 1);
-	console.log(arr);
+	//console.log(arr);
 }
 
 function sort(arr, aux, lo, hi) {
@@ -27,11 +27,11 @@ function merge(arr, aux, lo, mid, hi) {
 	}
 	var i = lo;
 	var j = mid + 1;
-	var k = 0;
+	var k = lo;
 
 
 	// This looping is not easily readable, need to refactor
-	while (i < (mid - lo + 1) && j < (hi + 1)) {
+	while (i <= mid && j <= hi) {
 		if (aux[j] < aux[i]) {
 			arr[k] = aux[j];
 			j++;
@@ -43,18 +43,18 @@ function merge(arr, aux, lo, mid, hi) {
 		}
 	}
 
-	while (i < (mid - lo + 1)) {
+	while (i <= mid) {
 		arr[k] = aux[i];
 		i++;
 		k++;
 	}
-	while (j < (hi - mid + 1)) {
+	while (j <= hi) {
 		arr[k] = aux[j];
 		j++;
 		k++;
 	}
-	//console.log(aux);
+	console.log(arr);
 }
 //Tests
-console.log("Test merge ::");
-merge([4, 5, 6, 1, 2, 3], [], 0, 2, 5);
+//console.log("Test merge ::");
+//merge([4, 5, 6, 1, 2, 3], [], 0, 2, 5);
