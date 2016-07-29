@@ -1,3 +1,12 @@
+var readArray = [];
+var fs = require('fs');
+fs.readFile('./quickSort.txt', 'utf-8', (err, data) => {
+	if (err) throw err;
+	readArray = data.split("\r\n").map(Number);
+	quickSort(readArray, 0 , readArray.length);
+	console.log(readArray);
+});
+
 function quickSort(arr, lo, hi) {
 	if (hi - lo < 2) {
 		return;
@@ -5,7 +14,7 @@ function quickSort(arr, lo, hi) {
 	var partitionIndex = partition(arr, lo, hi);
 	quickSort(arr, lo, partitionIndex - 1);
 	quickSort(arr, partitionIndex + 1, hi);
-	console.log(arr);
+	//console.log(arr);
 
 }
 
