@@ -33,6 +33,11 @@ function partition(arr, lo, hi) {
 	/*var t = arr[hi];
 	arr[hi] =  arr[lo];
 	arr[lo] = t;*/
+	//var partitionValue = arr[lo];
+	var partitionIndex = selectPartitionMedian(arr,lo,hi);
+	var t = arr[partitionIndex];
+	arr[partitionIndex] =  arr[lo];
+	arr[lo] = t;
 	var partitionValue = arr[lo];
 	var i = lo + 1;
 	var j = lo + 1;
@@ -53,4 +58,26 @@ function partition(arr, lo, hi) {
 	arr[j - 1] = temp;
 
 	return j - 1;
+}
+
+function selectPartitionMedian(arr,lo,hi){
+	if( (hi - lo +1) <=2 ){
+		return lo;
+	}else if( (hi - lo +1) %2 != 0 ){
+		if(arr[lo] > arr[(hi +lo)/2] && arr[lo] < arr[hi]){
+			return lo;
+		}else if ( arr[(hi +lo)/2] >arr[lo] && arr[(hi +lo)/2] < arr[hi]){
+			return ((hi +lo)/2)
+		}else{
+			return hi;
+		}
+	}else{
+		if(arr[lo] > arr[Math.floor((hi +lo)/2)] && arr[lo] < arr[hi]){
+			return lo;
+		}else if ( arr[Math.floor((hi +lo)/2)] >arr[lo] && arr[Math.floor((hi +lo)/2)] < arr[hi]){
+			return (Math.floor((hi +lo)/2))
+		}else{
+			return hi;
+		}
+	}
 }
