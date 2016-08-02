@@ -14,7 +14,7 @@ fs.readFile('./QuickSort.txt', 'utf-8', (err, data) => {
 
 function quickSort(arr, lo, hi) {
 	//NOTE : Intial wrong condition hi - lo
-	if ((hi - lo +1) < 2) {
+	if ((hi - lo + 1) < 2) {
 		return;
 	}
 	var partitionIndex = partition(arr, lo, hi);
@@ -34,11 +34,12 @@ function partition(arr, lo, hi) {
 	arr[hi] =  arr[lo];
 	arr[lo] = t;*/
 	//var partitionValue = arr[lo];
-	var partitionIndex = selectPartitionMedian(arr,lo,hi);
+	var partitionIndex = selectPartitionMedian(arr, lo, hi);
 	var t = arr[partitionIndex];
-	arr[partitionIndex] =  arr[lo];
+	arr[partitionIndex] = arr[lo];
 	arr[lo] = t;
 	var partitionValue = arr[lo];
+	//console.log("Partition Value::" + partitionValue);
 	var i = lo + 1;
 	var j = lo + 1;
 	var temp;
@@ -59,25 +60,32 @@ function partition(arr, lo, hi) {
 
 	return j - 1;
 }
+//NOTE : Follow consistent comparisons < or greater
 
-function selectPartitionMedian(arr,lo,hi){
-	if( (hi - lo +1) <=2 ){
+function selectPartitionMedian(arr, lo, hi) {
+	var loNum = arr[lo];
+	var mid = (hi - lo + 1) % 2 !== 0 ? (lo + hi) / 2 : Math.floor((hi + lo) / 2);
+	var midNum = arr[mid];
+	var hiNum = arr[hi];
+	if ((hi - lo + 1) < 2) {
 		return lo;
-	}else if( (hi - lo +1) %2 != 0 ){
-		if(arr[lo] > arr[(hi +lo)/2] && arr[lo] < arr[hi]){
-			return lo;
-		}else if ( arr[(hi +lo)/2] >arr[lo] && arr[(hi +lo)/2] < arr[hi]){
-			return ((hi +lo)/2)
-		}else{
+	} else if (loNum < midNum) {
+		if (midNum < hiNum) {
+			return mid;
+		} else if (loNum < hiNum) {
 			return hi;
+		} else {
+			return lo;
 		}
-	}else{
-		if(arr[lo] > arr[Math.floor((hi +lo)/2)] && arr[lo] < arr[hi]){
-			return lo;
-		}else if ( arr[Math.floor((hi +lo)/2)] >arr[lo] && arr[Math.floor((hi +lo)/2)] < arr[hi]){
-			return (Math.floor((hi +lo)/2))
-		}else{
-			return hi;
+	} else {
+		if (midNum < hiNum) {
+			if (loNum < hiNum) {
+				return lo;
+			} else {
+				return hi;
+			}
+		} else {
+			return mid;
 		}
 	}
 }
